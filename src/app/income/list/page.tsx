@@ -1,13 +1,14 @@
 
 import { RectangleStackIcon } from "@heroicons/react/24/outline";
 import Link from "next/link"; 
-import { fetchFilteredIncome, getIncomeMethods, getIncomeTypes } from "../../lib/data";
-import { lusitana } from "../../ui/fonts";
-import YearSelect from "../../ui/income/year-select";
-import IncomeDatePicker from "../../ui/income/date-picker";
-import IncomeSearch from "../../ui/income/income-search";
-import Pagination from "../../ui/income/pagination";
-import Table from "../../ui/income/table";
+import { fetchFilteredIncome, getIncomeMethods, getIncomeTypes } from "@/app/lib/data";
+import { lusitana } from "@/app/ui/fonts";
+
+import SearchBox from "@/app/ui/income/search-box";
+import Pagination from "@/app/ui/income/pagination";
+import Table from "@/app/ui/income/table";
+import { toInt } from "@/app/lib/utils";
+import DateFilters from "@/app/ui/income/date-filters";
 
 const IncomeList = async (props: {
   searchParams?: Promise<{
@@ -17,17 +18,15 @@ const IncomeList = async (props: {
     month?: string;
     day?: string;
   }>;
-}) => {
-  
+}) => {  
   const searchParams = await props.searchParams;
 
   const currentYear = new Date().getFullYear();
   const years = Array.from({ length: 5 }, (_, idx) => currentYear - idx);
 
-  const selectedYear = searchParams?.year ? Number(searchParams.year) : currentYear;
-  const selectedMonth = searchParams?.month ? Number(searchParams.month) : 0;
-  const selectedDay = searchParams?.day ? Number(searchParams.day) : 0;
-  
+  const selectedYear = toInt(searchParams?.year) ?? currentYear;
+  const selectedMonth = toInt(searchParams?.month) ?? 0;
+  const selectedDay = toInt(searchParams?.day) ?? 0;
 
   const query = searchParams?.query || '';
   const currentPage = Number(searchParams?.page) || 1;
@@ -39,19 +38,25 @@ const IncomeList = async (props: {
   ]);
 
    const totalPages = pagination.totalPages;
+
   return (
     <main>
       <h1 className={`${lusitana.className} mb-4 text-xl md:text-2xl`}>Income List</h1>
       <div className='flex justify-between'>
         <div className='flex space-x-2'>      
-            
-          <YearSelect selectedYear={selectedYear} years={years} /> 
-          <IncomeDatePicker
+          <DateFilters 
             selectedYear={selectedYear}
             selectedMonth={selectedMonth}
             selectedDay={selectedDay}
+            years={years}
+          />  
+          
+          <SearchBox 
+            selectedYear={selectedYear} 
+            initialQuery={query} 
+            clearKeys={['month', 'day', 'query', 'page']}
+            placeholder='Search Member...'
           />
-          <IncomeSearch selectedYear={selectedYear} initialQuery={query} />
         </div>
         
         <div>
@@ -73,6 +78,5 @@ const IncomeList = async (props: {
     </main>
   )
 }
-
 
 export default IncomeList;

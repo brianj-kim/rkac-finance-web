@@ -1,9 +1,3 @@
-const CURRENCY_FORMATTER = new Intl.NumberFormat("en-CA", {
-    currency: "CAD",
-    style: "currency",
-    minimumFractionDigits: 2,
-});
-
 const NUMBER_FORMATTER = new Intl.NumberFormat("en-CA");
 
 export const formatNumber = (number: number) => {
@@ -56,3 +50,9 @@ export const formatEnglishName = (first: string | null, last: string | null) => 
   const full = [f, l].filter(Boolean).join(' ');
   return full || null;
 };
+
+export const toInt = (v?: string) => {
+  const n = Number.parseInt(v ?? '', 10);
+
+  return Number.isFinite(n) ? n : undefined;
+}

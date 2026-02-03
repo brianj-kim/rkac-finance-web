@@ -1,5 +1,5 @@
-import { prisma } from '@/src/app/lib/prisma';
-import GenerateReceiptForm from '@/src/app/ui/receipt/generate-receipt-form';
+import { prisma } from '@/app/lib/prisma';
+import GenerateReceiptForm from '@/app/ui/receipt/generate-receipt-form';
 import Link from 'next/link';
 
 const MemberReceiptsPage = async (props: {

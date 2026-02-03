@@ -1,6 +1,5 @@
 import { z } from "zod";
 
-
 export type IncomeDataItem = {
     type: number;
     method?: number;
@@ -133,3 +132,59 @@ export type EditMemberDTO = {
   postal: string | null;
   note: string | null;
 };
+
+
+
+// Receipt Definitions
+export type ReceiptMemberSummary = {
+  memberId: number;
+  name: string;
+  donationCount: number;
+  totalCents: number;
+};
+
+export type DonationRow = {
+  incId: number;
+  dateISO: string; // YYYY-MM-DD
+  amountCents: number;
+  typeName?: string | null;
+  methodName?: string | null;
+  notes?: string | null;
+};
+
+export type ReceiptMemberInfo = {
+  memberId: number;
+  nameOfficial: string;
+  address: string | null;
+  city: string | null;
+  province: string | null;
+  postal: string | null;
+};
+
+export type PagedResult<T> = {
+  items: T[];
+  page: number;
+  totalPages: number;
+  totalItems: number;
+};
+
+// Manage Receipt Data
+export type ReceiptListRow = {
+  id: string;
+  taxYear: number;
+  serialNumber: number;
+  issueDateISO: string,
+  memberId: number;
+  donorName: string;
+  totalCents: number;
+  pdfUrl: string;
+};
+
+export type ReceiptListResult = {
+  data: ReceiptListRow[];
+  pagination: { totalPages: number; totalItems: number };
+}
+
+export type ActionOK<T extends object = {}> = { success: true } & T;
+export type ActionFail = { success: false; message: string };
+export type ActionResult<T extends object = {}> = ActionOK<T> | ActionFail;

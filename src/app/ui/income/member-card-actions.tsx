@@ -2,8 +2,8 @@
 
 import * as React from 'react';
 import Link from 'next/link';
-import { Button } from '@/src/components/ui/button';
-import EditMemberDialog from './edit-member-dialog';
+import { Button } from '@/components/ui/button';
+import EditMemberDialog from '@/app/ui/income/edit-member-dialog';
 
 type Props = {
   mbrId: number;

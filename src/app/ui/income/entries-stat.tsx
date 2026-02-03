@@ -159,7 +159,7 @@ const BatchTotalSummary = ({ control, incomeTypes, incomeMethods, selectedDate, 
       
         <Card className='bg-white'>
           <CardContent className='p-3'>
-            <div className='text-sm font-medium text-muted-foreground py-1'>Grand total</div>
+            <div className='text-sm font-medium text-muted-foreground py-1'>Batch total</div>
             <div className='text-sm font-semibold tabular-nums'>{formatCurrency(grandTotal)}</div>
             <div className='text-[11px] text-muted-foreground'>Valid rows only</div>
           </CardContent>

@@ -3,7 +3,7 @@
 import { revalidatePath } from 'next/cache';
 import { z } from 'zod';
 import { Prisma } from '@prisma/client';
-import { normalizeSpaces, normalizePostal } from '@/src/lib/utils';
+import { normalizeSpaces, normalizePostal } from '@/lib/utils';
 import { prisma } from './prisma';
 import { EditMemberDTO } from './definitions';
 

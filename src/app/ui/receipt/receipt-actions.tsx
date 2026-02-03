@@ -5,9 +5,9 @@ import path from 'path';
 import fs from 'fs/promises';
 import { Prisma } from '@prisma/client';
 
-import { prisma } from '../../lib/prisma';
-import { formatEnglishName, truncate } from '../../lib/utils';
-import { bufferFromReactPdf } from '../../lib/buffer-from-reactPDF';
+import { prisma } from '@/app/lib/prisma';
+import { formatEnglishName, truncate } from '@/app/lib/utils';
+import { bufferFromReactPdf } from '@/app/lib/buffer-from-reactPDF';
 import ReceiptDocument from './receipt-document';
 
 type ActionOK = {

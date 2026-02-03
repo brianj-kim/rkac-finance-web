@@ -3,9 +3,9 @@
 import { Prisma } from '@prisma/client';
 import { revalidatePath } from "next/cache"; // for save income entries
 
-import { BatchEntry, BatchIncomeDTO, CATEGORY_NAMES, CategoryDTO, IncomeSummary } from './definitions';
+import { BatchEntry, BatchIncomeDTO, CATEGORY_NAMES, CategoryDTO, IncomeSummary } from '@/app/lib/definitions';
 import { z } from 'zod';
-import { normalizeName } from '@/src/lib/utils';
+import { normalizeName } from '@/lib/utils';
 import { prisma } from './prisma';
 
 

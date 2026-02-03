@@ -1,4 +1,4 @@
-import SideNav from "../ui/income/sidenav";
+import SideNav from "@/app/ui/income/sidenav";
 
 const IncomeLayout = ({ children }: { children: React.ReactNode}) => {
     return (

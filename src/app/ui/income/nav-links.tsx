@@ -12,9 +12,9 @@ import { usePathname } from 'next/navigation';
 
 const links = [
   { name: 'Home', href: '/income', icon: HomeIcon, activePrefixes: ['/'] },
-  { name: 'Income', href: '/income/list', icon: InboxArrowDownIcon, activePrefixes: ['/income/list'] },
+  { name: 'Income List', href: '/income/list', icon: InboxArrowDownIcon, activePrefixes: ['/income/list'] },
   { name: 'Donation Receipt', href: '/income/receipt', icon: DocumentDuplicateIcon, activePrefixes: ['/income/receipt'] },
-  { name: 'Member', href: '/income/member', icon: UserGroupIcon, activePrefixes: ['/income/member'] }
+  { name: 'Church Member', href: '/income/member', icon: UserGroupIcon, activePrefixes: ['/income/member'] }
 
 ]
 

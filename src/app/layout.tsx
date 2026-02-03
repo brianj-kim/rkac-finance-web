@@ -1,6 +1,6 @@
-import './ui/global.css';
-import { inter } from './ui/fonts';
-import { Toaster } from '../components/ui/sonner';
+import '@/app/ui/global.css';
+import { inter } from '@/app/ui/fonts';
+import { Toaster } from '@/components/ui/sonner';
 
 const RootLayout = ({
   children

@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import NavLinks from './nav-links';
+import NavLinks from '@/app/ui/income/nav-links';
 import { PowerIcon } from '@heroicons/react/24/outline';
 
 const SideNav = () => {
@@ -10,7 +10,7 @@ const SideNav = () => {
                 href="/"
             >
                 <div className="w-32 text-white md:w-40">
-                RKAC-Finance
+                RKAC-Finance / Income
                 </div>
             </Link>
 

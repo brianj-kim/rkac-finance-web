@@ -4,9 +4,9 @@ import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/24/outline";
 import clsx from "clsx";
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
-import { generatePagination } from "../../lib/utils";
+import { generatePagination } from "@/app/lib/utils";
 
-const Pagination = ({ totalPages}: { totalPages: number }) => {
+const Pagination = ({ totalPages }: { totalPages: number }) => {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const currentPage = Number(searchParams.get('page')) || 1;
@@ -22,7 +22,7 @@ const Pagination = ({ totalPages}: { totalPages: number }) => {
   return (
     <>
       <div className='inline-flex'>
-        <PaginationArror
+        <PaginationArrow
           direction='left'
           href={createPageURL(currentPage - 1)}
           isDisabled={currentPage <= 1}
@@ -49,7 +49,7 @@ const Pagination = ({ totalPages}: { totalPages: number }) => {
           })}
         </div>
 
-        <PaginationArror
+        <PaginationArrow
           direction='right'
           href={createPageURL(currentPage + 1)}
           isDisabled={currentPage >= totalPages}
@@ -94,7 +94,7 @@ const PaginationNumber = ({
   );
 }
 
-const PaginationArror = ({
+const PaginationArrow = ({
   href,
   direction,
   isDisabled

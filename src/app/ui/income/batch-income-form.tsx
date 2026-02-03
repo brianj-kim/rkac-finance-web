@@ -12,13 +12,13 @@ import BatchTotalSummary from "./entries-stat";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { BatchFormValues, BatchSchema, CategoryDTO } from "../../lib/definitions";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/src/components/ui/table";
-import { Form, FormControl, FormField, FormItem } from "@/src/components/ui/form";
-import { Input } from "@/src/components/ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/src/components/ui/select";
-import { Textarea } from "@/src/components/ui/textarea";
-import { Button } from "@/src/components/ui/button";
-import { saveBatchIncome } from "../../lib/actions";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
+import { Button } from "@/components/ui/button";
+import { saveBatchIncome } from "@/app/lib/actions";
 
 const DEFAULT_ROW: BatchFormValues["entries"][number] = {
   name: "",

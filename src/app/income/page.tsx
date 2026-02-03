@@ -1,7 +1,7 @@
-import { lusitana } from "../ui/fonts";
-import CardWrapper from "../ui/income/cards";
-import LatestIncome from "../ui/income/latest-income";
-import YearSelect from "../ui/income/year-select";
+import { lusitana } from "@/app/ui/fonts";
+import CardWrapper from "@/app/ui/income/cards";
+import LatestIncome from "@/app/ui/income/latest-income";
+import YearSelect from "@/app/ui/income/year-select";
 
 type IncomeDashProps = {
     searchParams: Promise<{

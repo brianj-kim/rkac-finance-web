@@ -1,4 +1,4 @@
-import MemberCreateForm from '@/src/app/ui/income/member-create-form';
+import MemberCreateForm from '@/app/ui/income/member-create-form';
 import Link from 'next/link';
 
 const CreateMemberPage = () => {

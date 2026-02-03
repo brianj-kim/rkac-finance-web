@@ -1,6 +1,6 @@
 import type { IncomeList } from '@prisma/client';
-import { CategoryDTO } from '../../lib/definitions';
-import { formatCurrency } from '../../lib/utils';
+import { CategoryDTO } from '@/app/lib/definitions';
+import { formatCurrency } from '@/app/lib/utils';
 import ListActions from './list-actions';
 
 

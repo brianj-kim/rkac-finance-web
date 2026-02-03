@@ -6,10 +6,10 @@ import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 import { CategoryDTO, EditIncomeDTO } from '../../lib/definitions';
 import { updateIncome } from '../../lib/actions';
-import { Button } from '@/src/components/ui/button';
-import { Input } from '@/src/components/ui/input';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/src/components/ui/select';
-import { Textarea } from '@/src/components/ui/textarea';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Textarea } from '@/components/ui/textarea';
 
 
 

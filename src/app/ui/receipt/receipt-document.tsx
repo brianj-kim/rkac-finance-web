@@ -6,7 +6,7 @@ import {
   View,
   StyleSheet,
 } from "@react-pdf/renderer";
-import { formatCurrency } from "../../lib/utils";
+import { formatCurrency } from "@/app/lib/utils";
 
 type Charity = {
   legalName: string;
@@ -58,7 +58,9 @@ const styles = StyleSheet.create({
   small: { fontSize: 9, color: "#666" },
 });
 
-export default function ReceiptDocument(props: Props) {
+export type ReceiptDocumentProps = Props;
+
+const ReceiptDocument = (props: Props) => {
   const { taxYear, serialNumber, issueDateISO, charity, donor, totalCents, lines } = props;
 
   return (
@@ -146,3 +148,5 @@ export default function ReceiptDocument(props: Props) {
     </Document>
   );
 }
+
+export default ReceiptDocument;

@@ -5,9 +5,9 @@ import type { IncomeList } from '@prisma/client';
 
 import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
-import { deleteIncome } from '../../lib/actions';
-import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from '@/src/components/ui/alert-dialog';
-import { formatCurrency } from '../../lib/utils';
+import { deleteIncome } from '@/app/lib/actions';
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from '@/components/ui/alert-dialog';
+import { formatCurrency } from '@/app/lib/utils';
 
 
 type Props = {

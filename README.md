@@ -10,4 +10,6 @@ pnpm dev
 
 Open [http://localhost:3000/income](http://localhost:3000/income) with your browser to see the result.
 
+## PostgreSQL Database
 
+This project requires to use PostgreSQL Database server via docker (v. 16 or later)

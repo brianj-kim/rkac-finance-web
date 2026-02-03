@@ -3,8 +3,8 @@
 import { useState } from 'react';
 import type { IncomeList } from '@prisma/client';
 import { PencilIcon, TrashIcon } from '@heroicons/react/24/outline';
-import { CategoryDTO } from '../../lib/definitions';
-import DeleteIncomeDialog from './delete-income-dialog';
+import { CategoryDTO } from '@/app/lib/definitions';
+import DeleteIncomeDialog from '@/app/ui/income/delete-income-dialog';
 import EditIncomeDialog from './edit-income-dialog';
 
 type Props = {

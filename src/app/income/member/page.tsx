@@ -2,8 +2,8 @@ import { UserPlusIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import { fetchFilteredMembers } from "../../lib/data";
 import { lusitana } from "../../ui/fonts";
-import MemberSearch from "../../ui/income/member-search";
-import { Card, CardContent, CardHeader, CardTitle } from "@/src/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import SearchBox from "@/app/ui/income/search-box";
 import { formatEnglishName } from "../../lib/utils";
 import MemberCardActions from "../../ui/income/member-card-actions";
 import Pagination from "../../ui/income/pagination";
@@ -19,11 +19,16 @@ const MemberList = async (props: {
 
   const { data: members, pagination } = await fetchFilteredMembers(query, currentPage);  
 
+  const currentYear = new Date().getFullYear();
+
   return (
     <main className='space-y-4'>      
       <div className='flex flex-col gap-3 md:flex-row md:items-center md:justify-between'>
         <h1 className={`${lusitana.className} mb-4 text-xl md:text-2xl`}>Member Admin</h1>
-        <MemberSearch initialQuery={query} />
+        <SearchBox 
+          selectedYear={currentYear}
+          initialQuery={query} 
+        />
         <Link
           href="/income/member/create"
           className="inline-flex items-center gap-2 rounded-md bg-blue-600 px-3 py-2 text-sm font-medium text-white hover:bg-blue-700"

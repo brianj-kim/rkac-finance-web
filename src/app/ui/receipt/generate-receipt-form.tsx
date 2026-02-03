@@ -4,8 +4,8 @@ import * as React from 'react';
 import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
 import { generateAnnualReceipt } from './receipt-actions';
-import { Input } from '@/src/components/ui/input';
-import { Button } from '@/src/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
 
 const currentYear = new Date().getFullYear() - 1;
 

@@ -1,6 +1,5 @@
-import { getIncomeMethods, getIncomeTypes } from "@/src/app/lib/data";
-import BatchIncomeForm from "@/src/app/ui/income/batch-income-form";
-
+import { getIncomeMethods, getIncomeTypes } from "@/app/lib/data";
+import BatchIncomeForm from "@/app/ui/income/batch-income-form";
 
 const IncomeBatchPage = async () => {
   const incomeTypes = await getIncomeTypes();

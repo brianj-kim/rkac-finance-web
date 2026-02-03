@@ -3,7 +3,7 @@
 import * as React from 'react';
 import { toast } from 'sonner';
 import { CategoryDTO, EditIncomeDTO } from '../../lib/definitions';
-import { Dialog, DialogContent } from '@/src/components/ui/dialog';
+import { Dialog, DialogContent } from '@/components/ui/dialog';
 import EditIncomeForm from './edit-form';
 
 const EditIncomeDialog = (props: {

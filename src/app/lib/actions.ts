@@ -2,9 +2,9 @@
 
 import { revalidatePath } from 'next/cache';
 import { Prisma } from '@prisma/client';
-import { BatchFormValues, BatchSchema, IncomeSchema, SaveBatchIncomeResult } from './definitions';
-import { nameKey } from '@/src/lib/utils';
-import { prisma } from './prisma';
+import { BatchFormValues, BatchSchema, IncomeSchema, SaveBatchIncomeResult } from '@/app/lib/definitions';
+import { nameKey } from '@/lib/utils';
+import { prisma } from '@/app/lib/prisma';
 
 export const saveBatchIncome = async (
   values: BatchFormValues

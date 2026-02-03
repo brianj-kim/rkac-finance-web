@@ -1,15 +1,14 @@
 'use client';
 
-import * as React from 'react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/src/components/ui/select';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
-type Props = {
+const YearSelect = (props: { 
   selectedYear: number;
   years: number[];
-};
+}) => {
+  const { selectedYear, years } = props;
 
-const YearSelect = ({ selectedYear, years }: Props) => {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -18,17 +17,19 @@ const YearSelect = ({ selectedYear, years }: Props) => {
     const y = Number(value);
     const params = new URLSearchParams(searchParams.toString());
 
+    if (Number(value) === selectedYear) return;
+
     params.set('year', String(y));
     params.delete('month');
     params.delete('day');
     params.set('page', '1');
 
-    router.push(`${pathname}?${params.toString()}`);
+    router.replace(`${pathname}?${params.toString()}`);
   };
 
   return (
     <Select value={String(selectedYear)} onValueChange={onChange}>
-      <SelectTrigger className='w=[140px]'>
+      <SelectTrigger className='w-[140px]'>
         <SelectValue placeholder='Year' />
       </SelectTrigger>
       <SelectContent>

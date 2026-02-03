@@ -1,10 +1,7 @@
-import { getIncomeMethods, getIncomeTypes } from '@/src/app/lib/data';
-import { prisma } from '@/src/app/lib/prisma';
-import EditIncomeForm from '@/src/app/ui/income/edit-form';
+import { getIncomeMethods, getIncomeTypes } from '@/app/lib/data';
+import { prisma } from '@/app/lib/prisma';
+import EditIncomeForm from '@/app/ui/income/edit-form';
 import { notFound } from 'next/navigation';
-
-
-
 
 const EditIncomePage = async ({
   params,
