@@ -109,11 +109,12 @@ export async function getReceiptMemberInfo(input: { memberId: number }): Promise
   if (!m) return null;
 
   const nameOfficial =
-    truncate(formatEnglishName(m.name_eFirst, m.name_eLast) ?? m.name_kFull, 80) ?? '-';
+    truncate(formatEnglishName(m.name_eFirst, m.name_eLast) ?? 'Official Name is not set yet', 80) ?? '-';
 
   return {
     memberId: m.mbr_id,
     nameOfficial,
+    name_kFull: m.name_kFull,
     address: m.address,
     city: m.city,
     province: m.province,

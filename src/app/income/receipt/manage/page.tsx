@@ -7,7 +7,9 @@ import SearchBox from '@/app/ui/income/search-box';
 import Pagination from '@/app/ui/income/pagination';
 
 import { fetchReceipts } from '@/app/lib/receipt-manage-data';
-import DeleteReceiptButton from '@/app/ui/receipt/delete-receipt-button';
+import ManageReceiptsTable from '@/app/ui/receipt/manage-receipts-table';
+
+
 //Bulk Generation of Receipts 
 import GenerateYearReceiptsButton from '@/app/ui/receipt/generate-year-receipts-button';
 
@@ -52,53 +54,13 @@ const ManageReceiptsPage = async (props: {
         </div>
       </div>
 
-      <div className='mt-4 rounded-md border border-gray-200'>
-        <div className='grid grid-cols-12 gap-2 border-b border-gray-200 bg-gray-50 px-3 py-2 text-sm font-medium text-gray-700'>
-          <div className='col-span-2'>Issued</div>
-          <div className='col-span-2'>Serial</div>
-          <div className='col-span-4'>Donor</div>
-          <div className='col-span-2 text-right'>Amount</div>
-          <div className='col-span-1 text-right'>PDF</div>
-          <div className='col-span-1 text-right'>Del</div>
-        </div>
+      <ManageReceiptsTable rows={data} />
 
-        {data.map((r) => (
-          <div
-            key={r.id}
-            className='grid grid-cols-12 gap-2 px-3 py-2 border-b last:border-b-0 border-gray-100 text-sm items-center'
-          >
-            <div className='col-span-2'>{r.issueDateISO}</div>
-            <div className='col-span-2'>
-              {r.taxYear}-{String(r.serialNumber).padStart(5, '0')}
-            </div>
-            <div className='col-span-4 truncate'>{r.donorName}</div>
-            <div className='col-span-2 text-right font-medium'>{formatCurrency(r.totalCents)}</div>
-            <div className='col-span-1 text-right'>
-              <a
-                href={r.pdfUrl}
-                target='_blank'
-                rel='noopener noreferrer'
-                className='rounded-md bg-blue-500 px-3 py-2 text-sm font-medium text-white hover:bg-blue-600 inline-flex justify-center'
-              >
-                Open
-              </a>
-            </div>
-            <div className='col-span-1 text-right'>
-              <DeleteReceiptButton receiptId={r.id} />
-            </div>            
-          </div>
-        ))}
-
-        {data.length === 0 && (
-          <div className='p-4 text-sm text-gray-600'>No receipts found.</div>
-        )}
+    {pagination.totalPages > 1 && (
+      <div className='mt-5 flex w-full justify-center'>
+        <Pagination totalPages={pagination.totalPages} />
       </div>
-
-      {pagination.totalPages > 1 && (
-        <div className='mt-5 flex w-full justify-center'>
-          <Pagination totalPages={pagination.totalPages} />
-        </div>
-      )}
+    )}
     </main>
   );
 };

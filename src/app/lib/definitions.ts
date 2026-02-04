@@ -155,6 +155,7 @@ export type DonationRow = {
 export type ReceiptMemberInfo = {
   memberId: number;
   nameOfficial: string;
+  name_kFull: string;
   address: string | null;
   city: string | null;
   province: string | null;

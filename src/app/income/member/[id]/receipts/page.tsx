@@ -1,6 +1,9 @@
-import { prisma } from '@/app/lib/prisma';
-import GenerateReceiptForm from '@/app/ui/receipt/generate-receipt-form';
 import Link from 'next/link';
+import { prisma } from '@/app/lib/prisma';
+import { lusitana } from '@/app/ui/fonts';
+import { formatCurrency } from '@/app/lib/utils';
+
+import GenerateReceiptForm from '@/app/ui/receipt/generate-receipt-form';
 
 const MemberReceiptsPage = async (props: {
   params: Promise<{ id: string }>;
@@ -19,12 +22,12 @@ const MemberReceiptsPage = async (props: {
       city: true,
       province: true,
       postal: true,
-      email: true
-    }
+      email: true,
+    },
   });
 
   if (!member) {
-    return <main className='p-6'>Member not found.</main>;
+    return <main>Member not found.</main>;
   }
 
   const receipts = await prisma.receipt.findMany({
@@ -37,56 +40,79 @@ const MemberReceiptsPage = async (props: {
       serialNumber: true,
       totalCents: true,
       eligibleCents: true,
-      pdfUrl: true
-    }
+      pdfUrl: true,
+    },
   });
 
+  const englishName =
+    [member.name_eFirst, member.name_eLast].filter(Boolean).join(' ') || '-';
+
   return (
-    <main className='space-y-4'>
-      <div className='flex items-center justify-between gap-3'>
-        <div>
-          <h1 className='text-xl font-sesmibold md:text-2xl'>Donation Receipts</h1>
-          <div className='text-sm text-muted-foreground'>
-            {member.name_kFull} ({[member.name_eFirst, member.name_eLast].filter(Boolean).join(' ') || "-"})
+    <main>
+      <h1 className={`${lusitana.className} mb-4 text-xl md:text-2xl`}>
+        Donation Receipts
+      </h1>
+
+      <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+        <div className="space-y-1">
+          <div className="text-sm text-muted-foreground">
+            {member.name_kFull} ({englishName})
           </div>
         </div>
 
-        <Link className='text-sm underline' href='/income/member'>
-          Back to members
-        </Link>
+        <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-end">
+          <Link
+            href="/income/member"
+            className="rounded-md border border-gray-200 px-4 py-2 text-sm font-medium hover:bg-gray-50 text-center"
+          >
+            Back to members
+          </Link>
 
-        <GenerateReceiptForm memberId={memberId} />
-
-        <div className='rounded-md border'>
-          <div className='grid grid-cols-5 gap-2 border-b bg-muted px-3 py-2 text-xs font-medium'>
-            <div>Tax Year</div>
-            <div>Serial</div>
-            <div>Issued</div>
-            <div className='text-right'>Eligible</div>
-            <div className='text-right'>PDF</div>
+          <div className='sm:min-2-[360px]'>
+            <GenerateReceiptForm memberId={memberId} />
           </div>
-
-          {receipts.length === 0 ? (
-            <div className='p-4 text-sm text-muted-foreground'>No receipts yet.</div>
-          ) : (
-            receipts.map((r) => (
-              <div key={r.id} className='grid grid-cols-5 gap-2 px-3 py-2 text-sm border-b last:border-b-0'>
-                <div>{r.taxYear}</div>
-                <div>{r.serialNumber}</div>
-                <div>{new Date(r.issueDate).toLocaleDateString()}</div>
-                <div className='text.right'>${(r.eligibleCents / 100).toFixed(2)}</div>
-                <div className='text-right'>
-                  <a className='underline' href={r.pdfUrl} target='_blank' rel='noreferrer'>
-                    Open
-                  </a>
-                </div>
-              </div>
-            ))
-          )}
         </div>
       </div>
+
+      <div className="mt-4 rounded-md border border-gray-200">
+        <div className="grid grid-cols-5 gap-2 border-b border-gray-200 bg-gray-50 px-3 py-2 text-xs font-medium text-gray-700">
+          <div>Tax Year</div>
+          <div>Serial</div>
+          <div>Issued</div>
+          <div className="text-right">Eligible</div>
+          <div className="text-right">PDF</div>
+        </div>
+
+        {receipts.length === 0 ? (
+          <div className="p-4 text-sm text-muted-foreground">No receipts yet.</div>
+        ) : (
+          receipts.map((r) => (
+            <div
+              key={r.id}
+              className="grid grid-cols-5 gap-2 px-3 py-2 text-sm border-b last:border-b-0 border-gray-100 items-center"
+            >
+              <div>{r.taxYear}</div>
+              <div>{String(r.serialNumber).padStart(5, '0')}</div>
+              <div>{new Date(r.issueDate).toLocaleDateString()}</div>
+              <div className="text-right font-medium">
+                {formatCurrency(r.eligibleCents)}
+              </div>
+              <div className="text-right">
+                <a
+                  className="rounded-md bg-blue-500 px-3 py-2 text-sm font-medium text-white hover:bg-blue-600 inline-flex justify-center"
+                  href={r.pdfUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Open
+                </a>
+              </div>
+            </div>
+          ))
+        )}
+      </div>
     </main>
-  )
-}
+  );
+};
 
 export default MemberReceiptsPage;

@@ -1,11 +1,12 @@
 import Link from 'next/link';
 import { lusitana } from '@/app/ui/fonts';
-import { toInt } from '@/app/lib/utils';
+import { formatEnglishName, toInt } from '@/app/lib/utils';
 
 import { getMemberDonationsForYear, getReceiptMemberInfo } from '@/app/lib/receipt-data';
 import DonationSelector from '@/app/ui/receipt/donation-selector';
 
 export const runtime = 'nodejs';
+const formatValue = (v: string | null | undefined) => (v?.trim() ? v.trim() : '-');
 
 const ReceiptMemberPage = async (props: {
   params: Promise<{ memberId: string }>;
@@ -26,7 +27,9 @@ const ReceiptMemberPage = async (props: {
   if (!member) {
     return (
       <main>
-        <h1 className={`${lusitana.className} mb-4 text-xl md:text-2xl`}>Donor Receipt</h1>
+        <h1 className={`${lusitana.className} mb-4 text-xl md:text-2xl`}>
+          Donation Review (Selector)
+        </h1>
         <div className='text-sm text-gray-600'>Member not found.</div>
       </main>
     );
@@ -35,7 +38,7 @@ const ReceiptMemberPage = async (props: {
   return (
     <main>
       <h1 className={`${lusitana.className} mb-4 text-xl md:text-2xl`}>
-        Donation Review for {member.nameOfficial} In {selectedYear}
+        Donation Review (Selector)
       </h1>
 
       <div className='flex justify-between mb-4'>
@@ -55,6 +58,19 @@ const ReceiptMemberPage = async (props: {
           >
             Refresh
           </Link>
+        </div>
+      </div>
+
+      {/* Member Details */}
+      <div className='mb-4 rounded-md border border-gray-200 p-4'>
+        <div className='text-sm text-muted-foreground'>Member Details</div>
+
+        <div className='mt-1 text-base font-semibold'>
+          {formatValue(member.name_kFull)}
+        </div>
+
+        <div className='text-sm text-muted-foreground'>
+          {formatValue(member.nameOfficial)}
         </div>
       </div>
 

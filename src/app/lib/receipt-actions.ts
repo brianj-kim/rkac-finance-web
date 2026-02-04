@@ -206,7 +206,7 @@ export const deleteReceiptAndFile = async (input: {
   receiptId: string;
 }): Promise<DeleteReceiptResult> => {
   const receiptId = String(input.receiptId || '').trim();
-  if (!receiptId) return { success: false, message: 'Invailid reeiptId'};
+  if (!receiptId) return { success: false, message: 'Invalid receiptId'};
 
   try {
     const receipt = await prisma.receipt.findUnique({
@@ -232,7 +232,7 @@ export const deleteReceiptAndFile = async (input: {
     await prisma.receipt.delete({ where: { id: receiptId } });
 
     revalidatePath('/income/receipt/manage');
-    revalidatePath('/income/receipt/${receipt.memberId');
+    revalidatePath(`/income/receipt/${receipt.memberId}`);
 
     return { success: true };
   } catch (err) {
@@ -353,7 +353,7 @@ const generateOneMemberReceipt = async (input: {
             address: donorAddress,
             city: donorCity,
             province: donorProvince,
-            postal: donorProvince,
+            postal: donorPostal
           },
           totalCents,
           lines,
@@ -519,3 +519,50 @@ export const generateReceiptsForYearBatch = async (input: {
     failures,
   };
 }
+
+// Bulk delete for receipts
+export const deleteReceiptsAndFiles = async (input: {
+  receiptIds: string[];
+}): Promise<ActionResult<{ deleted: number }>> => {
+  const receiptIds = Array.from(
+    new Set((input.receiptIds ?? []).map((s) => String(s).trim()))
+  ).filter(Boolean);
+
+  if (receiptIds.length === 0) {
+    return { success: false, message: 'No receipts selected.' };
+  }
+
+  try {
+    const receipts = await prisma.receipt.findMany({
+      where: { id: { in: receiptIds } },
+      select: { id: true, pdfUrl: true },
+    });
+
+
+    for (const r of receipts) {
+      const filePath = safePublicFilePathFromUrl(r.pdfUrl);
+      if (!filePath) continue;
+
+      try {
+        await fs.unlink(filePath);
+      } catch (err: any) {
+        if (err?.code !== 'ENOENT') {
+          console.error('unlink failed:', err);
+          return { success: false, message: 'Failed to delete one or more PDF files.' };
+        }
+      }
+    }
+
+    const result = await prisma.receipt.deleteMany({
+      where: { id: { in: receiptIds } },
+    });
+
+    revalidatePath('income/receipt/manage');
+
+    return { success: true, deleted: result.count };
+  } catch (err) {
+    console.error('deleteReceiptsAndFiles error:', err);
+    return { success: false, message: 'Failed to bulk delete receipts.' };
+  }
+};
+
