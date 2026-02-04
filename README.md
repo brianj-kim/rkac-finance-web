@@ -1,4 +1,4 @@
-# RKAC Finance (MVP)
+# RKAC Finance
 
 RKAC Finance is a web app built for **Regina Korean Alliance Church** to help the treasurer record church income (offering, gifts, etc.) and generate **donation receipts for Canadian income tax purposes (CRA)**.
 
@@ -6,7 +6,7 @@ This repository contains an MVP version and will be improved over time.
 
 ---
 
-## Features (MVP)
+## Features (These features will be added/updated/fixed iteratively)
 
 - **Income recording**
   - Create and manage income entries (offering, gift, etc.)
