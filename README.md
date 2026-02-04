@@ -6,7 +6,7 @@ This repository contains an MVP version and will be improved over time.
 
 ---
 
-## Features (New features will be added/updated/fixed iteratively in the future)
+## Features (features will be added/updated/fixed iteratively in the future)
 
 - **Income recording**
   - Create and manage income entries (offering, gift, etc.)
