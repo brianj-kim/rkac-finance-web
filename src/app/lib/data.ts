@@ -3,7 +3,7 @@
 import { Prisma } from '@prisma/client';
 import { revalidatePath } from "next/cache"; // for save income entries
 
-import { BatchEntry, BatchIncomeDTO, CATEGORY_NAMES, CategoryDTO, IncomeSummary } from '@/app/lib/definitions';
+import { BatchEntry, BatchIncomeDTO, CategoryDTO, IncomeSummary } from '@/app/lib/definitions';
 import { z } from 'zod';
 import { normalizeName } from '@/lib/utils';
 import { prisma } from './prisma';
@@ -59,19 +59,26 @@ const buildIncomeListWhere = (args: {
 };
 
 export const fetchCardData = async (year: number): Promise<IncomeSummary> => {
-    const grouped = await prisma.incomeList.groupBy({
-        by: ['type'],
+    // Categories (range='inc')
+    const categories = await getIncomeTypes();
+    const categoryIds = categories.map((c) => c.id);
+
+    const grouped = await prisma.income.groupBy({
+        by: ['inc_type'],
         _sum: { amount: true },
         where: {
             year,
-            type: { in: [...CATEGORY_NAMES] }
+            inc_type: { in: categoryIds }
         }
     });
-    
-    const sumMap = new Map(grouped.map((g) => [g.type, g._sum.amount ?? 0]));
-    const byCategory = CATEGORY_NAMES.map((category) => ({
-        category,
-        sum: sumMap.get(category) ?? 0,
+
+    const sumMap = new Map(grouped.map((g) => [g.inc_type, g._sum.amount ?? 0]));
+
+    const byCategory = categories.map((c) => ({
+        categoryId: c.id,
+        categoryName: c.name,
+        order: c.order ?? null,
+        sum: sumMap.get(c.id) ?? 0,
     }));
 
     const total = byCategory.reduce((acc, r) => acc + r.sum, 0);
@@ -152,7 +159,7 @@ export const getDays = async (year: number, month: number) => {
 
 const getCategoriesByRange = async (range: 'inc' | 'imd'): Promise<CategoryDTO[]> => {
     const rows = await prisma.category.findMany({
-        select: { ctg_id: true, name: true, detail: true },
+        select: { ctg_id: true, name: true, detail: true, order: true, range: true },
         orderBy: { order: 'asc'},
         where: { range }        
     });
@@ -160,7 +167,9 @@ const getCategoriesByRange = async (range: 'inc' | 'imd'): Promise<CategoryDTO[]
     return rows.map((row) => ({
         id: row.ctg_id,
         name: (row.name ?? '').trim(),
-        detail: row.detail ?? null
+        detail: row.detail ?? null,
+        order: row.order ?? null,
+        range: row.range ?? null,
     }));
 };
 

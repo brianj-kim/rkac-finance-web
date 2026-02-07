@@ -66,14 +66,14 @@ const SearchBox = ({
 
   return (
     <form
-      className='flex items-center gap-2'
+      className='flex w-full items-center gap-2'
       onSubmit={(e) => {
         e.preventDefault();
         applySearch(value);
       }}
     >
       <Input 
-        className='w-100'
+        className='flex-1 min-w-80'
         placeholder={placeholder}
         value={value}
         onChange={(e) => setValue(e.target.value)}

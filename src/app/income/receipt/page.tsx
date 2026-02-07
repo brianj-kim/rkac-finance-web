@@ -34,29 +34,35 @@ const ReceiptMainPage = async (props: {
   return (
     <main>
       <h1 className={`${lusitana.className} text-xl md:text-2xl`}>
-        Donation Reciepts
+        Donation Reciept
       </h1>
       <p className="text-sm text-muted-foreground mb-4 ">
         Select a member to review donations and generate a receipt.
       </p>
 
-      <div className='flex justify-between'>
-        <div className='flex space-x-2'>
-          <span className='flex items-center text-sm'>Tax Year: </span>
-          <YearSelect 
-            selectedYear={selectedYear}
-            years={years}
-          />
-          <SearchBox 
-            selectedYear={selectedYear}
-            initialQuery={query}
-            clearKeys={['query', 'page']}
-            placeholder='Search member name'
-          />
+      <div className='w-full flex flex-col gap-3 md:flex-row md:items-end'>
+        
+        <div className='w-full flex flex-col gap-3 items-center sm:flex-row sm:flex-wrap sm:items-end sm:justify-start md:flex-1'>
+          <div className='flex items-center gap-2'>
+            <span className='text-sm text-muted-foreground whitespace-nowrap'>Tax Year:</span>
+            <YearSelect selectedYear={selectedYear} years={years} />
+          </div>
+
+          <div className='w-full sm:flex-1'>
+            <SearchBox 
+              selectedYear={selectedYear}
+              initialQuery={query}
+              clearKeys={['query', 'page']}
+              placeholder='Search member name'
+            />
+          </div>
         </div>
 
-        <div>
-          <Link href='/income/receipt/manage' className='inline-flex items-center gap-2 rounded-md bg-blue-600 px-3 py-2 text-sm font-medium text-white hover:bg-blue-700'>
+        <div className='flex w-full justify-center sm:justify-start md:w-auto md:justify-end'>
+          <Link 
+            href='/income/receipt/manage' 
+            className='flex flex-1 shrink-0 items-center gap-2 whitespace-nowrap md:flex-none rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white'
+          >
             Manage Receipts
           </Link>
         </div>

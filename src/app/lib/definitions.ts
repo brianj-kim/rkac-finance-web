@@ -14,24 +14,13 @@ export type Category = {
     name: string
 }
 
-
-export const CATEGORY_NAMES = [
-  'Ministry',
-  'Tithe',
-  'Thanks',
-  'Mission',
-  'Share',
-  'Bank',
-  'ETC',
-] as const;
-
-export type CategoryName = (typeof CATEGORY_NAMES)[number];
-
 export type IncomeSummary = {
   total: number;
   byCategory: {
-    category: CategoryName;
+    categoryId: number;
+    categoryName: string;
     sum: number;
+    order?: number | null;
   }[];
 };
 
@@ -40,6 +29,8 @@ export type CategoryDTO = {
   id: number;
   name: string;
   detail?: string | null;
+  order?: number | null;
+  range?: string | null;
 }
 
 export type IncomeEntryDTO = {
@@ -138,9 +129,11 @@ export type EditMemberDTO = {
 // Receipt Definitions
 export type ReceiptMemberSummary = {
   memberId: number;
-  name: string;
+  oName: string | null;
+  kName: string;
   donationCount: number;
   totalCents: number;
+  pdfUrl?: string | null;
 };
 
 export type DonationRow = {

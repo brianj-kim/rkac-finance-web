@@ -1,12 +1,12 @@
 import Link from 'next/link';
 import { lusitana } from '@/app/ui/fonts';
-import { formatEnglishName, toInt } from '@/app/lib/utils';
+import { toInt } from '@/app/lib/utils';
 
 import { getMemberDonationsForYear, getReceiptMemberInfo } from '@/app/lib/receipt-data';
 import DonationSelector from '@/app/ui/receipt/donation-selector';
+import MemberDetailActions from '@/app/ui/receipt/member-detail-actions';
 
 export const runtime = 'nodejs';
-const formatValue = (v: string | null | undefined) => (v?.trim() ? v.trim() : '-');
 
 const ReceiptMemberPage = async (props: {
   params: Promise<{ memberId: string }>;
@@ -63,15 +63,15 @@ const ReceiptMemberPage = async (props: {
 
       {/* Member Details */}
       <div className='mb-4 rounded-md border border-gray-200 p-4'>
-        <div className='text-sm text-muted-foreground'>Member Details</div>
-
-        <div className='mt-1 text-base font-semibold'>
-          {formatValue(member.name_kFull)}
+        <div className='flex items-start justify-between gap-3 mb-4'>
+          <div className='min-w-0'>
+            <div className='text-sm text0muted-foreground'>Member</div>
+            <div className='mt-1 text-base font-semibold truncate'>{member.name_kFull}</div>
+            <div className='text-sm text-muted-foreground'>{member.nameOfficial}</div>
+          </div>
         </div>
 
-        <div className='text-sm text-muted-foreground'>
-          {formatValue(member.nameOfficial)}
-        </div>
+        <MemberDetailActions memberId={memberId} />
       </div>
 
       <DonationSelector memberId={memberId} taxYear={selectedYear} donations={donations} />

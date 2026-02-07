@@ -34,10 +34,10 @@ type FormValues = z.infer<typeof FormSchema>;
 type Props = {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  mbrId: number | null;
+  memberId: number | null;
 };
 
-const EditMemberDialog = ({ open, onOpenChange, mbrId }: Props) => {
+const EditMemberDialog = ({ open, onOpenChange, memberId }: Props) => {
   const router = useRouter();
 
   const [loading, setLoading] = React.useState(false);
@@ -60,13 +60,13 @@ const EditMemberDialog = ({ open, onOpenChange, mbrId }: Props) => {
   });
 
   React.useEffect(() => {
-    if (!open || !mbrId) return;
+    if (!open || !memberId) return;
 
     let cancelled = false;
 
     const load = async () => {
       setLoading(true);
-      const res = await getMemberForEdit(mbrId);
+      const res = await getMemberForEdit(memberId);
       setLoading(false);
 
       if (cancelled) return;
@@ -86,7 +86,7 @@ const EditMemberDialog = ({ open, onOpenChange, mbrId }: Props) => {
         name_eLast: res.member.name_eLast ?? '',
         email: res.member.email ?? '',
         address: res.member.address ?? '',
-        city: res.member.address ?? '',
+        city: res.member.city ?? '',
         province: res.member.province ?? '',
         postal: res.member.postal ?? '',
         note: res.member.note ?? ''
@@ -98,7 +98,7 @@ const EditMemberDialog = ({ open, onOpenChange, mbrId }: Props) => {
     return () => {
       cancelled = true;
     };
-  }, [open, mbrId, form, onOpenChange]);
+  }, [open, memberId, form, onOpenChange]);
 
   const onSubmit = async (values: FormValues) => {
     const res = await updateMember(values);

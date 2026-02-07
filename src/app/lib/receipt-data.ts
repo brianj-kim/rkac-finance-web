@@ -8,8 +8,6 @@ import type { DonationRow, PagedResult, ReceiptMemberInfo, ReceiptMemberSummary 
 
 let ITEMS_PER_PAGE = 12;
 
-const first = (v?: string | string[]) => (Array.isArray(v) ? v[0] : v);
-
 const toCents = (n: unknown) => {
   const x = Number(n);
   return Number.isFinite(x) ? x : 0;
@@ -66,22 +64,53 @@ export const getReceiptMemberMenu = async (input: {
 
   const aggMap = new Map<number, { donationCount: number; totalCents: number }>();
   for (const a of aggs) {
-    if (a.member != null) aggMap.set(a.member, {
-      donationCount: a._count._all ?? 0,
-      totalCents: toCents(a._sum.amount),
-    });
+    const key = a.member;
+    if (key != null) {
+      aggMap.set(key, {
+        donationCount: a._count._all ?? 0,
+        totalCents: toCents(a._sum.amount)
+      })
+    }    
+  }
+
+  // receipts for this year for these member (latest first)
+  const receipts = 
+    ids.length === 0
+      ? []
+      : await prisma.receipt.findMany({
+        where: {
+          taxYear,
+          memberId: { in: ids },
+        },
+        select: {
+          memberId: true,
+          pdfUrl: true,
+          issueDate: true,
+          serialNumber: true,
+        },
+        orderBy: [{ issueDate: 'desc' }, { serialNumber: 'desc' }],        
+      });
+
+  const receiptMap = new Map<number, string>();
+  for (const r of receipts) {
+    if (!receiptMap.has(r.memberId)) {
+      receiptMap.set(r.memberId, r.pdfUrl);
+    }
   }
 
   return {
     items: members.map((m) => {
-      const name =
-        truncate(formatEnglishName(m.name_eFirst, m.name_eLast) ?? m.name_kFull, 80) ?? '-';
+      const oName =
+        truncate(formatEnglishName(m.name_eFirst, m.name_eLast) ?? 'Official name is not set yet', 80);
+      const kName = m.name_kFull;
       const agg = aggMap.get(m.mbr_id);
       return {
         memberId: m.mbr_id,
-        name,
+        oName,
+        kName,
         donationCount: agg?.donationCount ?? 0,
         totalCents: agg?.totalCents ?? 0,
+        pdfUrl: receiptMap.get(m.mbr_id) ?? null,
       };
     }),
     page: safePage,

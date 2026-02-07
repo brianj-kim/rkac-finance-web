@@ -42,28 +42,33 @@ const IncomeList = async (props: {
   return (
     <main>
       <h1 className={`${lusitana.className} mb-4 text-xl md:text-2xl`}>Income List</h1>
-      <div className='flex justify-between'>
-        <div className='flex space-x-2'>      
+      <div className='w-full flex flex-col gap-3 items-stretch md:flex-row md:items-end'>
+        <div className='w-full flex flex-col gap-3 items-center sm:flex-row sm:flex-wrap sm:items-end md:justify-start'>
           <DateFilters 
             selectedYear={selectedYear}
             selectedMonth={selectedMonth}
             selectedDay={selectedDay}
             years={years}
           />  
-          
-          <SearchBox 
-            selectedYear={selectedYear} 
-            initialQuery={query} 
-            clearKeys={['month', 'day', 'query', 'page']}
-            placeholder='Search Member...'
-          />
+
+          <div className='w-full sm:flex-1'>
+            <SearchBox 
+              selectedYear={selectedYear} 
+              initialQuery={query} 
+              clearKeys={['month', 'day', 'query', 'page']}
+              placeholder='Search Member...'
+            />
+          </div>
         </div>
-        
-        <div>
-          <Link href='/income/list/create' className='flex items-center rounded-md bg-blue-500 px-4 py-2 font-medium text-sm text-white'>
+
+        <div className='flex w-full md:w-auto md:justify-end'>
+          <Link 
+            href='/income/list/create' 
+            className='flex flex-1 shrink-0 items-center gap-2 whitespace-nowrap md:flex-none rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white'
+          >
             <RectangleStackIcon width={24} height={24}  className='pr-2' />
-            Create Batch Income
-          </Link>
+              Create Batch Income
+            </Link>
         </div>
 
       </div>

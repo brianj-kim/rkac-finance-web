@@ -10,41 +10,49 @@ const CardWrapper = async ({ selectedYear }: CardWrapperProps) => {
     const { total, byCategory } = await fetchCardData(selectedYear)
 
     return (
-        <>
-            <Card title="Total Income" value={total} />
+        <section className='grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4'>
+          <Card title='Total Income' value={total} variant='total' />
 
-            {byCategory.map((item) => (
-                <Card 
-                    key={item.category}
-                    title={item.category}
-                    value={item.sum}
-                />
-            ))}
-        </>
+          {byCategory.map((item) => (
+            <Card
+                key={item.categoryId}
+                title={item.categoryName}
+                value={item.sum}
+                variant='default'
+            />
+          ))}
+        </section>        
     );
 }
 
 export const Card = ({
     title,
     value,
-    type
+    variant = 'default',
 }: {
     title: string;
-    value: number | null;
-    type?: string 
+    value: number | null; // cents
+    variant?: 'default' | 'total'; 
 }) => {
+    const containerClass =
+        variant === 'total'
+            ? 'bg-gray-100 ring-1 ring-gray-200'
+            : 'bg-gray-50 hover:bg-gray-100'
+
     return (
-        <div className='rounded-xl bg-gray-50 p-2 shadow-sm'>
-            <div className='flex p-4'>
-                <h3 className='ml-2 text-sm font-medium'>{title}</h3>
-            </div>
-            <p
-                className={`${lusitana.className}
-                truncate rounded-xl bg-white px-4 py-8 text-center text-xl`}
-            >
-                {formatCurrency(value!/100)}
-            </p>
-        </div>
+			<div className={`rounded-xl p-3 shadow-sm transition-colors ${containerClass}`}>
+				<div className='flex items-start justify-between gap-3 p-3'>
+					<h3 className='text-sm font-medium text-gray-700'>{title}</h3>
+				</div>
+
+				<div className='px-3 pb-3'>
+					<p
+						className={`${lusitana.className} truncate rounded-xl bg-white px-4 py-6 text-center text-2xl font-semibold text-gray-900`}
+					>
+						{formatCurrency((value ?? 0))}
+					</p>
+				</div>
+			</div>
     )
 }
 

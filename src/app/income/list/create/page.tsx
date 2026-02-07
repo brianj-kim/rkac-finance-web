@@ -6,11 +6,10 @@ const IncomeBatchPage = async () => {
   const incomeMethods = await getIncomeMethods();
 
   return (
-    <main>
-      
+    <main className='mx-auto w-full max-w-7xl px-2 sm:px-4 pt-1 pb-4'>      
       <BatchIncomeForm incomeTypes={incomeTypes} incomeMethods={incomeMethods} />
     </main>
-  )
-}
+  );
+};
 
 export default IncomeBatchPage;

@@ -8,6 +8,9 @@ module.exports = {
     // Add other paths where you use Tailwind classes
   ],
   theme: {
+    screens: {
+      md: "945px",
+    },
     extend: {},
   },
   plugins: [],

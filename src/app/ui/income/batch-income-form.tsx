@@ -4,7 +4,7 @@ import React, { useMemo, useState } from "react";
 import { useFieldArray, useForm, useWatch, type Control } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import  { ArrowDownCircleIcon, ArrowsUpDownIcon, ArrowUturnRightIcon, ReceiptRefundIcon } from "@heroicons/react/24/outline";
+import  { ArrowDownCircleIcon, ArrowsUpDownIcon, ArrowUturnRightIcon, ReceiptRefundIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
 
 import { lusitana } from "../fonts";
 
@@ -19,6 +19,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { saveBatchIncome } from "@/app/lib/actions";
+
+import Link from 'next/link';
 
 const DEFAULT_ROW: BatchFormValues["entries"][number] = {
   name: "",
@@ -240,9 +242,9 @@ const BatchIncomeForm = ({ incomeTypes, incomeMethods, defaultRowCount = 20 }: P
   return (
     <Form {...form}>
       <h1 className={`${lusitana.className} mb-6 text-xl md:text-2xl`}>Create Income on {dateLabel}</h1>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 m-2">      
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">      
         {/* Shared date */}
-        <div className='sticky -top-12 z-50 bg-white backdrop-blur-sm py-4 pt-2 border-b w-full'>       
+        <div className='sticky top-0 z-40 border-b bg-white/90 backdrop-blur-sm py-2'>       
           <BatchTotalSummary 
             control={control}
             incomeTypes={incomeTypes}
@@ -253,29 +255,36 @@ const BatchIncomeForm = ({ incomeTypes, incomeMethods, defaultRowCount = 20 }: P
 
         </div>
 
-        <div>
+        <div className='flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between'>
+          <Button asChild variant='secondary'>
+            <Link href={`/income/list?year=${year}`} className='flex items-center gap-2'>
+              <ArrowLeftIcon className='h-5 w-5' />
+              Back to list
+            </Link>
+          </Button>
+
           <Button
-              type="button"
-              variant="destructive"
+              type='button'
               onClick={() => replace(makeDefaultEntries(1))}
               disabled={formState.isSubmitting || fields.length === 1}
+              className='inline-flex shrink-0 items-center gap-2 whitespace-nowrap bg-blue-600 text-white hover:bg-blue-700 disabled:bg-blue-700/60'
             >
-              <ReceiptRefundIcon /> Clear to 1 row
+              <ReceiptRefundIcon className='h-5 w-5' /> Clear to single row
             </Button>  
         </div>     
 
         {/* Rows */}
-        <div>
+        <div className='w-full overflow-x-auto rounded-md border'>
           <Table>
-            <TableHeader>
-              <TableRow>              
-                <TableHead className="w-5">#</TableHead>
-                <TableHead className="w-32">Name</TableHead>
-                <TableHead className="w-36">Amount (in cents)</TableHead>
-                <TableHead className="w-54">Type</TableHead>
-                <TableHead className="w-52">Method</TableHead>
-                <TableHead>Note</TableHead>
-                <TableHead className="w-23">Actions</TableHead>
+            <TableHeader className="sticky top-0 bg-gray-100">
+              <TableRow className="hover:bg-gray-100">
+                <TableHead className="w-5 font-semibold text-gray-700">#</TableHead>
+                <TableHead className="w-32 font-semibold text-gray-700">Name</TableHead>
+                <TableHead className="w-36 font-semibold text-gray-700">Amount (in cents)</TableHead>
+                <TableHead className="w-54 font-semibold text-gray-700">Type</TableHead>
+                <TableHead className="w-52 font-semibold text-gray-700">Method</TableHead>
+                <TableHead className="w-min-100 font-semibold text-gray-700">Note</TableHead>
+                <TableHead className="w-25 font-semibold text-gray-700">Actions</TableHead>
               </TableRow>
             </TableHeader>
 
@@ -295,8 +304,8 @@ const BatchIncomeForm = ({ incomeTypes, incomeMethods, defaultRowCount = 20 }: P
           </Table>
         </div>
 
-        <div className="flex justify-between">
-          <div className='flex gap-2'>
+        <div className="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
+          <div className='flex flex-wrap items-center gap-2'>
             {/* <Input
               type="number"
               min="1"
@@ -334,8 +343,9 @@ const BatchIncomeForm = ({ incomeTypes, incomeMethods, defaultRowCount = 20 }: P
                 }
               }}
               disabled={formState.isSubmitting}
+              className='inline-flex items-center gap-2 whitespace-nowrap'
             >
-              <ArrowsUpDownIcon /> Add {rowsToAdd} row{rowsToAdd !== 1 ? 's' : ''}
+              <ArrowsUpDownIcon className='h-5 w-5' /> Add {rowsToAdd} row{rowsToAdd !== 1 ? 's' : ''}
             </Button>
 
             <Button
@@ -343,13 +353,18 @@ const BatchIncomeForm = ({ incomeTypes, incomeMethods, defaultRowCount = 20 }: P
               variant="secondary"
               onClick={() => replace(makeDefaultEntries(defaultRowCount))}
               disabled={formState.isSubmitting}
+              className="inline-flex items-center gap-2 whitespace-nowrap"
             >
-              <ArrowUturnRightIcon />
+              <ArrowUturnRightIcon className='h-5 w-5' />
               Reset to {defaultRowCount} rows
             </Button>
           </div>
 
-          <Button type="submit" className='bg-blue-600 text-white' disabled={formState.isSubmitting}>
+          <Button 
+            type="submit" 
+            disabled={formState.isSubmitting}
+            className='inline-flex items-center gap-2 bg-blue-600 text-white hover:bg-blue-700'             
+          >
             <ArrowDownCircleIcon />
             {formState.isSubmitting ? "Saving..." : "Save Entries"}
           </Button>
