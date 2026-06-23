@@ -1,49 +1,32 @@
 # RKAC Finance
 
-RKAC Finance is a web app built for **Regina Korean Alliance Church** to help the treasurer record church income (offering, gifts, etc.) and generate **donation receipts for Canadian income tax purposes (CRA)**.
+## Problem
+Treasurers need a reliable way to record weekly church income, manage donor/member information, and generate yearly donation receipts.
 
-This repository contains an MVP version and will be improved over time.
+## My Role
+Designed and implemented the application structure, database schema, income management workflow, receipt generation, and deployment pipeline.
 
----
+## Key Features
+- Admin authentication and role-based access control
+- Member/donor management
+- Income entry with filtering and search
+- Yearly donation receipt PDF generation
+- Bulk receipt generation
+- PostgreSQL-backed data model
+- GitHub Actions deployment workflow
 
-## Features (features will be added/updated/fixed iteratively in the future)
+## Architecture
+[Frontend / Next.js App Router] → [Server Actions / API Routes] → [Prisma ORM] → [PostgreSQL]
 
-- **Income recording**
-  - Create and manage income entries (offering, gift, etc.)
-  - Filter/search by year and other criteria
+## Screenshots
+Add dashboard, income list, member page, receipt generation, and admin page screenshots.
 
-- **Member management**
-  - Member admin page
-  - Search members and manage member profiles
-
-- **Donation receipts**
-  - Generate donation receipts (PDF) for a selected year and selected donations
-  - Manage receipts list (open PDF, delete receipt record + file)
-  - Bulk generation (generate receipts for all eligible members for a tax year)
-
----
-
-## Tech Stack
-
-- **Next.js (App Router)** + **React**
-- **TypeScript**
-- **Prisma** ORM
-- **PostgreSQL**
-- **shadcn/ui** + Tailwind CSS
-- **@react-pdf/renderer** for PDF receipts
-
----
-
-## Getting Started (Local Development)
-
-### 1) Install dependencies
-
-```bash
-pnpm install
-````
-
-### 2) Start PostgreSQL with Docker (PostgreSQL 16+)
-
+## What I Learned
+- Designing database-backed financial workflows
+- Handling sensitive member/donation data
+- Building PDF generation in a web app
+- Structuring admin permissions and role-based access
+- Deploying a production-style Next.js app
 If you have Docker installed:
 
 ```bash
